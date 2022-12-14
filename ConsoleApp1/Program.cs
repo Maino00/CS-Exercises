@@ -78,7 +78,7 @@ public class Database
 
     public void PrintAll()
     {
-        for(var i = 0; i <= _currentIndex; i++)
+        for(var i = 0; i < _currentIndex; i++)
         {
             People[i].Print();
         }
@@ -110,7 +110,7 @@ public class OOP_Task
                     var year = Convert.ToInt32(Console.ReadLine());
 
                     Console.Write("Gpa:  ");
-                    var gpa = Convert.ToInt32(Console.ReadLine());
+                    var gpa = Convert.ToSingle(Console.ReadLine());
 
                     var student = new Student(name, age, year, gpa);
 
