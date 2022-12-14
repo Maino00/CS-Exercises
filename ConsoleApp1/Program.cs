@@ -1,9 +1,9 @@
 ﻿using System;
 
 
-namespace ObjectOriented;
+namespace OOP_Task;
 
-public abstract class Person
+public class Person
 {
     public string Name;
     public int Age;
@@ -14,7 +14,10 @@ public abstract class Person
         Age = age;
     }
 
-    public abstract void Print();
+    public virtual void Print()
+    {
+        Console.WriteLine($"My name is {Name}, my age is {Age}");
+    }
 }
 public class Student : Person
 {
@@ -68,6 +71,11 @@ public class Database
         People[_currentIndex++] = staff;
     }
 
+    public void AddPerson(Person person)
+    {
+        People[_currentIndex++] = person;
+    }
+
     public void PrintAll()
     {
         for(var i = 0; i <= _currentIndex; i++)
@@ -77,7 +85,7 @@ public class Database
     }
 }
 
-public class Task
+public class OOP_Task
 {
     private static void Main()
     {
@@ -85,7 +93,7 @@ public class Task
  
         while (true)
         {
-            Console.WriteLine("1) Add Student  2) Add Staff  3) Print All");
+            Console.WriteLine("1) Add Student  2) Add Staff  3) Add Person  4) Print All");
 
             var option = Convert.ToInt32(Console.ReadLine());
 
@@ -127,7 +135,19 @@ public class Task
                     database.AddStaff(staff);
 
                     break;
+
                 case 3:
+                    Console.Write("Name:  ");
+                    var name2 = Console.ReadLine();
+
+                    Console.Write("Age:  ");
+                    var age2 = Convert.ToInt32(Console.ReadLine());
+
+                    var person = new Person(name2, age2);
+
+                    database.AddPerson(person);
+                    break;
+                case 4:
                     database.PrintAll();
                     break;
                 default: 
