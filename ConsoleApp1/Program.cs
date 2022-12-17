@@ -3,13 +3,38 @@
 
 namespace OOP_Task;
 
+
+
 public class Person
 {
-    public string Name;
-    public int Age;
+    private string _name;
+    public string Name {
+        get { return _name; }
+        set { 
+            if (value == null || value == "" || value.Length >=32)
+            {
+                throw new Exception("The name is not valid");
+            }
+            _name = value; 
+        }
+    
+    }
+    private int _age;
+    public int Age{
+        get { return _age; }
+        set { 
+                if(value <= 0 || value > 128)
+                {
+                    throw new Exception("The age is not valid");
+                }
+                _age = value; 
+            }
+    }
+    
 
     public Person(string name, int age)
     {
+        
         Name = name;
         Age = age;
     }
@@ -19,10 +44,32 @@ public class Person
         Console.WriteLine($"My name is {Name}, my age is {Age}");
     }
 }
+
 public class Student : Person
 {
-    public int Year;
-    public float Gpa;
+    private int _year;
+    public int Year{
+        get { return _year; }
+        set { 
+                if(value < 1 || value > 5)
+                {
+                throw new Exception("The year is not valid");
+                }
+                _year = value; 
+            }
+    }
+
+    private float _gpa;
+    public float Gpa{
+        get { return _gpa; }
+        set { 
+                if(value < 0 || value > 4)
+                {
+                throw new Exception("The GPA is not valid");
+                }
+                _gpa = value; 
+            }
+    }
 
     public Student(string name, int age, int year, float gpa) : base(name, age)
     {
@@ -38,8 +85,30 @@ public class Student : Person
 
 public class Staff : Person
 {
-    double Salary;
-    int JoinYear;
+    private double _salary;
+    public double Salary{
+        get { return _salary; }
+        set { 
+                if(value < 0 || value > 120000)
+                {
+                    throw new Exception("The salary is not valid");
+                }
+                _salary = value; 
+            }
+    }
+
+    private int _joinYear;
+    public int JoinYear{
+        get { return _joinYear; }
+        set { 
+                var defaultYear = 2022 - (2022-Age);
+                if(defaultYear <= 21)
+                {
+                    throw new Exception("The join year is not valid");
+                }
+                _joinYear = defaultYear; 
+            }
+    }
 
     public Staff(string name , int age, double salary, int joinYear) : base(name, age)
     {
@@ -112,10 +181,13 @@ public class OOP_Task
                     Console.Write("Gpa:  ");
                     var gpa = Convert.ToSingle(Console.ReadLine());
 
+                    try{
                     var student = new Student(name, age, year, gpa);
-
                     database.AddStudent(student);
-
+                    }
+                    catch(Exception e){
+                    Console.WriteLine(e.Message);
+                    }
                     break;
                 case 2:
                     Console.Write("Name:  ");
@@ -130,9 +202,14 @@ public class OOP_Task
                     Console.Write("Join Year:  ");
                     var joinYear = Convert.ToInt32(Console.ReadLine());
 
+                   try{
                     var staff = new Staff(name1, age1, salary, joinYear);
-
                     database.AddStaff(staff);
+                    
+                   }
+                    catch(Exception e){
+                    Console.WriteLine(e.Message);
+                   }
 
                     break;
 
@@ -142,10 +219,19 @@ public class OOP_Task
 
                     Console.Write("Age:  ");
                     var age2 = Convert.ToInt32(Console.ReadLine());
+                    try
+                    {
+                        var person = new Person(name2, age2);
+                        database.AddPerson(person);
+                        person.Name = null;
 
-                    var person = new Person(name2, age2);
+                    }
+                    catch(Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
 
-                    database.AddPerson(person);
+                    
                     break;
                 case 4:
                     database.PrintAll();
